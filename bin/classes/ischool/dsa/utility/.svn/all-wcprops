@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/repos/!svn/ver/14491/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility
+END
+SqlHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/SqlHelper.java
+END
+XmlHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/XmlHelper.java
+END
+DSADelayInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/DSADelayInfo.java
+END
+DSAccessPoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/DSAccessPoint.java
+END
+DSFault.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/DSFault.java
+END
+DSEnvelope.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/repos/!svn/ver/14491/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/DSEnvelope.java
+END
+StringHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/StringHelper.java
+END
+Converter.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/Converter.java
+END
+AESHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/AESHelper.java
+END
+DSStatus.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/DSStatus.java
+END
+DSRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/DSRequest.java
+END
+ConnectionParam.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/ConnectionParam.java
+END
+PropertyUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/PropertyUtil.java
+END
+DSABatchInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/DSABatchInfo.java
+END
+DSResponse.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/DSResponse.java
+END
+DSConnection.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/DSConnection.java
+END
+TripleDESHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/TripleDESHelper.java
+END
+Path.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/Path.java
+END
+ExceptionUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/ExceptionUtil.java
+END
+ConnectionUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/ConnectionUtil.java
+END
+XmlUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/XmlUtil.java
+END

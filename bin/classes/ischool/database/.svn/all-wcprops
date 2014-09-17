@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/database
+END
+ForeignKeyAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/database/ForeignKeyAction.java
+END
+ICreateTableAgent.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/database/ICreateTableAgent.java
+END
+DBBuilderFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/database/DBBuilderFactory.java
+END
+IDBBuilder.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/database/IDBBuilder.java
+END
+ColumnCollection.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/database/ColumnCollection.java
+END
+ColumnInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/database/ColumnInfo.java
+END
+AbstractCreateTableAgent.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/database/AbstractCreateTableAgent.java
+END
+ForeignKeyInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/database/ForeignKeyInfo.java
+END

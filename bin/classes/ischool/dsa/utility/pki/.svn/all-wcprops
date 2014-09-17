@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/pki
+END
+PvkConvert.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/pki/PvkConvert.java
+END
+KeyPairUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/pki/KeyPairUtil.java
+END
+KeyPairStorage.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/utility/pki/KeyPairStorage.java
+END

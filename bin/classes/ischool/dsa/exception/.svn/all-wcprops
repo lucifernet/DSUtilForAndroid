@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/exception
+END
+DSAServiceException.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/exception/DSAServiceException.java
+END
+DSAServerException.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/exception/DSAServerException.java
+END

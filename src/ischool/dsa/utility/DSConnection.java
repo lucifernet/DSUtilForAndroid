@@ -1,0 +1,405 @@
+package ischool.dsa.utility;
+
+import ischool.dsa.exception.DSAServerException;
+import ischool.dsa.utility.http.HttpUtil;
+
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.net.URLConnection;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import org.w3c.dom.Element;
+
+/**
+ * @author Yaoming
+ * 
+ */
+public class DSConnection {
+
+	public static final String SERVICE_CONNECT = "DS.Base.Connect";
+	public static final int DEFAULT_TIMEOUT = 10000000;
+
+	private SecurityTokenType _securityTokenType;
+
+	private DSAccessPoint _accessPoint;
+
+	private String _userName;
+
+	private String _password;
+
+	private String _sessionID;
+
+	private Element _securityTokenElement;
+
+	public String _targetContract;
+
+//	private PublicKey _targetContractKeyPair;
+
+	private int _timeout = -1;
+
+	public DSConnection(DSAccessPoint accessPoint, String targetContract){
+		_accessPoint = accessPoint;
+		_targetContract = targetContract;
+	}
+	
+	public DSConnection(DSAccessPoint accessPoint, String userName,
+			String password) {
+		init(accessPoint, "", userName, password);
+	}
+
+	public DSConnection(String accessPoint, String userName, String password) {
+		DSAccessPoint ap = DSAccessPoint.createInstance(accessPoint);
+
+		init(ap, "", userName, password);
+	}
+
+	public DSConnection(String accessPoint, String targetContract,
+			String userName, String password) {
+		DSAccessPoint ap = DSAccessPoint.createInstance(accessPoint);
+
+		init(ap, targetContract, userName, password);
+	}
+
+	public DSConnection(String accessPoint, String sessionid) {
+		_accessPoint = DSAccessPoint.createInstance(accessPoint);
+		_securityTokenType = SecurityTokenType.Session;
+		_sessionID = sessionid;
+
+		_securityTokenElement = XmlUtil.createElement("SecurityToken");
+		_securityTokenElement.setAttribute("Type",
+				_securityTokenType.toString());
+
+		XmlUtil.addElement(_securityTokenElement, "SessionID", _sessionID);
+	}
+
+	public DSConnection(String accessPoint, Element securityTokenElement) {
+		_accessPoint = DSAccessPoint.createInstance(accessPoint);
+		_securityTokenType = SecurityTokenType.Passport;
+		_securityTokenElement = securityTokenElement;
+	}
+
+	public static DSConnection createInternalConnection(String accessPoint) {
+		Element internalElement = XmlUtil.createElement("SecurityToken");
+		internalElement.setAttribute("Type", "Internal");
+
+		DSConnection dscon = new DSConnection(accessPoint, internalElement);
+		return dscon;
+	}
+
+	public DSResponse sendRequest(String targetService, DSRequest request)
+			throws DSAServerException {
+
+		return sendRequest(_accessPoint, targetService, request);
+	}
+
+	/***
+	 * 認證並建立連線, 若成功則之後的 request 皆使用 session 來作為認證方式, 若指定的 contract 不支援 session
+	 * 則會擲回 exception
+	 ****/
+	public void connect() throws DSAServerException {
+		DSRequest request = new DSRequest();
+		Element header = request.getHeader();
+		request.setTargetContract(_targetContract);
+
+		if (_securityTokenType == SecurityTokenType.Basic) {
+			Element sttElement = XmlUtil.selectElement(header, "SecurityToken");
+			XmlUtil.addElement(sttElement, "UserName", _userName);
+			XmlUtil.addElement(sttElement, "Password", _password);
+		} else if (_securityTokenType == SecurityTokenType.Passport) {
+			XmlUtil.setElement(header, "SecurityToken", _securityTokenElement);
+		}
+
+		Element bodyElement = request.getBody();
+		XmlUtil.addElement(bodyElement, "RequestSessionID");
+
+		DSResponse response = this.sendSecureRequest(SERVICE_CONNECT, request);
+
+		_sessionID = XmlUtil.getElementText(response.getBody(), "SessionID");
+
+		if (!_sessionID.isEmpty()) {
+			_securityTokenType = SecurityTokenType.Session;
+
+			_securityTokenElement = XmlUtil.createElement("SecurityToken");
+			_securityTokenElement.setAttribute("Type",
+					_securityTokenType.toString());
+
+			XmlUtil.addElement(_securityTokenElement, "SessionID", _sessionID);
+		}
+	}
+	
+	public DSResponse sendRequest(DSAccessPoint accessPoint,
+			String targetService, DSRequest request) throws DSAServerException {
+
+		request.setTargetContract(_targetContract);
+
+		request.setTargetService(targetService);
+
+		request.setSecurityToken(_securityTokenElement);
+
+		DSResponse response = null;
+
+		try {
+
+			URLConnection urlConnection = accessPoint.getURL().openConnection();
+
+			if (urlConnection instanceof HttpsURLConnection) {
+
+				TrustManager[] trustManager = new TrustManager[] { new X509TrustManager() {
+
+					public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+
+						return null;
+					}
+
+					public void checkClientTrusted(
+							java.security.cert.X509Certificate[] certs,
+							String authType) {
+
+					}
+
+					public void checkServerTrusted(
+							java.security.cert.X509Certificate[] certs,
+							String authType) {
+
+					}
+				} };
+
+				SSLContext sslContext = SSLContext.getInstance("SSL");
+				sslContext.init(null, trustManager,
+						new java.security.SecureRandom());
+
+				HttpsURLConnection.setDefaultSSLSocketFactory(sslContext
+						.getSocketFactory());
+
+				HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+
+					public boolean verify(String urlHostName, SSLSession session) {
+
+						return true;
+					}
+				};
+
+				HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
+
+				HttpsURLConnection httpsConnection = (HttpsURLConnection) urlConnection;
+
+				httpsConnection.setRequestMethod("POST");
+				httpsConnection.setDoOutput(true);
+
+				OutputStreamWriter outStream = new OutputStreamWriter(
+						httpsConnection.getOutputStream(), "UTF-8");
+
+				outStream.write(request.toString());
+				outStream.flush();
+				outStream.close();
+
+				response = new DSResponse(httpsConnection.getInputStream());
+			} else {
+				InputStream is = HttpUtil.postData(urlConnection,
+						request.toString(), this.getTimeout());
+				response = new DSResponse(is);
+			}
+
+		} catch (Exception e) {
+			DSAServerException exception = new DSAServerException(
+					DSStatus.UnhandledException(), e);
+
+			throw exception;
+		}
+
+		if (response.getStatus().equals(DSStatus.Successful()))
+			return response;
+
+		DSAServerException exception = new DSAServerException(
+				response.getStatus());
+
+		throw exception;
+	}
+
+	public DSResponse sendSecureRequest(String targetService, DSRequest request) {
+		return sendSecureRequest(targetService, request, "dynamic");
+	}
+
+	public DSResponse sendSecureRequest(String targetService,
+			DSRequest request, String cryptoType) {
+		request.setTargetContract(_targetContract);
+		request.setSecurityToken(_securityTokenElement);
+		request.setTargetService(targetService);
+
+		Element newElement = XmlUtil.createElement("Envelope");
+		Element headElement = XmlUtil.addElement(newElement, "Header");
+		Element bodyElement = XmlUtil.addElement(newElement, "Body");
+		XmlUtil.addElement(bodyElement, "Content");
+
+		XmlUtil.addElement(headElement, "TargetContract", _targetContract);
+		Element ctElement = XmlUtil.addElement(headElement, "CryptoToken");
+
+//		boolean dynamic = false;
+		if (cryptoType.equalsIgnoreCase("dynamic")) {
+//			dynamic = true;
+			cryptoType = "Dynamic";
+		} else {
+			cryptoType = "Static";
+		}
+		ctElement.setAttribute("Type", cryptoType);
+
+//		// 處理 secret key
+//		String secretKey = UUID.randomUUID().toString();
+//		PublicKey publicKey = getTargetContractPublicKey();
+//		String encSecKey = KeyPairUtil.encrypt(publicKey, secretKey);
+//		XmlUtil.addElement(ctElement, "SecretKey", encSecKey);
+//
+//		// 處理 public key
+//		KeyPair myKey = KeyPairUtil.generatorKeyPair();
+//		Element myPubKeyElement = KeyPairUtil.genPubKeyElement(myKey);
+//		String myPubKeyString = XmlHelper.convertToString(myPubKeyElement,
+//				false);
+//		String encMyPubKeyString = "";
+//		try {
+//			encMyPubKeyString = AESHelper.encrypt(myPubKeyString, secretKey);
+//		} catch (Exception e) {
+//			throw new DSAServerException(
+//					DSStatus.UnhandledException("Encrypt public key occured an exception."),
+//					e);
+//		}
+//		XmlUtil.addElement(ctElement, "PublicKey", encMyPubKeyString);
+
+//		// 處理 cipher
+//		String oriReqString = request.getXML();
+//		String cipher = "";
+//		try {
+//			cipher = AESHelper.encrypt(oriReqString, secretKey);
+//		} catch (Exception e) {
+//			throw new DSAServerException(
+//					DSStatus.UnhandledException("Encrypt cipher occured an exception."),
+//					e);
+//		}
+//		XmlUtil.addElement(ctElement, "Cipher", cipher);
+
+//		String newData = XmlHelper.convertToString(newElement);
+//		Element rspElement = null;
+		// 傳送 request
+//		try {
+//			rspElement = HttpUtil.postDataForElement(_accessPoint.getURL()
+//					.toString(), newData, this.getTimeout());
+//		} catch (Exception ex) {
+//			throw new DSAServerException(
+//					DSStatus.UnhandledException("Post data occured an exception."),
+//					ex);
+//		}
+
+//		// 處理 response
+//		headElement = XmlUtil.selectElement(rspElement, "Header");
+//		ctElement = XmlUtil.selectElement(headElement, "CryptoToken");
+//		cipher = XmlUtil.getElementText(ctElement, "Cipher");
+//
+//		if (dynamic) {
+//			secretKey = XmlUtil.getElementText(ctElement, "SecretKey");
+//			secretKey = KeyPairUtil.decrypt(myKey.getPrivate(), secretKey);
+//		}
+//
+//		String oriRspString = "";
+//		try {
+//			oriRspString = AESHelper.decrypt(cipher, secretKey);
+//		} catch (Exception e) {
+//			throw new DSAServerException(
+//					DSStatus.UnhandledException("Decrypt response occured an exception."),
+//					e);
+//		}
+
+//		DSResponse rsp = new DSResponse(oriRspString);
+//		return rsp;
+		
+		return null;
+	}
+
+	public String getSessionID() {
+		return _sessionID;
+	}
+
+//	public PublicKey getTargetContractPublicKey() {
+//		if (_targetContractKeyPair != null)
+//			return _targetContractKeyPair;
+//
+//		DSRequest req = new DSRequest();
+//		req.setTargetContract("info");
+//
+//		Element securityToken = XmlUtil.createElement("SecurityToken");
+//		securityToken.setAttribute("Type", "Public");
+//		req.setSecurityToken(securityToken);
+//
+//		req.setTargetService("Public.GetPublicKey");
+//
+//		Element content = XmlUtil.createElement("Content");
+//		XmlUtil.addElement(content, "Format", "pkcs8");
+//		XmlUtil.addElement(content, "Contract", _targetContract);
+//		req.setContent(content);
+//
+////		URLConnection con;
+//		try {
+////			con = _accessPoint.getURL().openConnection();
+////			InputStream is = HttpUtil.postData(con, req.getXML(), 100000);
+//			Element e = HttpUtil.postDataForElement(_accessPoint.getURL().toString(), req.getXML(), 100000);
+////			return KeyPairUtil.loadPubKey(e);
+//			return null;
+//		} catch (Exception ex) {
+//			throw new DSAServerException(
+//					DSStatus.ConnectionError("Get target contract public occured an exception."),
+//					ex);
+//		}
+//
+//	}
+
+	/**
+	 * 取得 Timeout 時間, 單位為毫秒
+	 * **/
+	public int getTimeout() {
+		if (_timeout == -1)
+			return DEFAULT_TIMEOUT;
+		return _timeout;
+	}
+
+	/**
+	 * 設定 Timeout 時間, 單位為毫秒
+	 * **/
+	public void setTimeout(int timeout) {
+		_timeout = timeout;
+	}
+
+	private void init(DSAccessPoint accessPoint, String targetContract,
+			String userName, String password) {
+		_accessPoint = accessPoint;
+		_userName = userName;
+		_password = password;
+		_targetContract = targetContract;
+		_securityTokenType = SecurityTokenType.Basic;
+
+		_securityTokenElement = XmlUtil.createElement("SecurityToken");
+		_securityTokenElement.setAttribute("Type",
+				_securityTokenType.toString());
+
+		XmlUtil.addElement(_securityTokenElement, "UserName", _userName);
+		XmlUtil.addElement(_securityTokenElement, "Password", _password);
+	}
+
+	public static void main(String[] args) {
+		DSConnection con = new DSConnection(
+				"http://10.1.1.163/greening/service/shared/", "user",
+				"vicky.chang@ischool.com.tw", "hua0910");
+		// DSResponse rsp = con.sendSecureRequest("DS.Base.Connect",
+		// new DSRequest(), "dynamic");
+		// System.out.println(rsp.getXML());
+		con.connect();
+		System.out.println(con.getSessionID());
+	}
+}
+
+enum SecurityTokenType {
+	Basic, Session, Enhanced, Passport;
+}

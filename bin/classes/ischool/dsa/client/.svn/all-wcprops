@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/repos/!svn/ver/14640/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/client
+END
+DSScope.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/repos/!svn/ver/14638/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/client/DSScope.java
+END
+DSUserInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/client/DSUserInfo.java
+END
+DSApplicant.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/client/DSApplicant.java
+END
+DSAPassport.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/repos/!svn/ver/14640/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/client/DSAPassport.java
+END
+UserAgentProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/client/UserAgentProvider.java
+END
+ContractConnection.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/client/ContractConnection.java
+END

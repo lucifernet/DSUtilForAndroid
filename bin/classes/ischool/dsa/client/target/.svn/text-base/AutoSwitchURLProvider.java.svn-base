@@ -1,0 +1,29 @@
+package ischool.dsa.client.target;
+
+import ischool.dsa.client.target.dad.DadTargetURLProvider;
+
+public class AutoSwitchURLProvider implements ITargetURLProvider {
+
+	private ITargetURLProvider _provider;
+	private String _original;
+	
+	public AutoSwitchURLProvider(String urlOrDsnsName) {
+		_original = urlOrDsnsName;
+		
+		if (urlOrDsnsName.toLowerCase().startsWith("http://")
+				|| urlOrDsnsName.toLowerCase().startsWith("https://"))
+			_provider = new SingleTargetURLProvider(urlOrDsnsName);
+		else
+			_provider = new DadTargetURLProvider(urlOrDsnsName);
+	}
+
+	@Override
+	public String getTargetURL() {
+		return _provider.getTargetURL();
+	}
+
+	@Override
+	public String getOriginal() {
+		return _original;
+	}
+}

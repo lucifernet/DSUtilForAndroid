@@ -1,0 +1,6 @@
+package ischool.dsa.client.target;
+
+public interface ITargetURLProvider {
+	public String getOriginal();
+	public String getTargetURL();
+}

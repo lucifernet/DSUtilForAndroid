@@ -1,0 +1,41 @@
+package ischool.dsa.client.async;
+
+import ischool.dsa.client.ContractConnection;
+import ischool.dsa.exception.DSAServerException;
+import ischool.dsa.exception.DSAServiceException;
+import ischool.dsa.utility.DSRequest;
+import ischool.dsa.utility.DSResponse;
+
+public class AsyncRequestWorker implements Runnable {
+
+	public ContractConnection _connection;
+	public DSRequest _request;
+	public String _targetService;
+	public IResponseListener _listener;
+
+	public AsyncRequestWorker(ContractConnection connection, String targetService, DSRequest request, IResponseListener listener) {
+		_connection = connection;
+		_targetService = targetService;
+		_listener = listener;
+		_request = request;
+	}
+
+	@Override
+	public void run() {
+		try {
+			DSResponse response = _connection.sendRequest(_targetService, _request);
+			_listener.onServiceResponse(response);
+		} catch (Exception ex) {
+			if (ex instanceof DSAServiceException) {
+				_listener.onServiceError((DSAServiceException) ex);
+			} else if (ex instanceof DSAServerException) {
+				_listener.onServerError((DSAServerException) ex);
+			}
+
+			_listener.onError(ex);
+		} finally {
+			_listener.onCompleted();
+		}
+	}
+
+}

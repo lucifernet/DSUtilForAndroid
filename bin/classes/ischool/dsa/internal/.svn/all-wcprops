@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/internal
+END
+ResponseHeader.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/internal/ResponseHeader.xsd
+END
+ValidErrorHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/internal/ValidErrorHandler.java
+END
+Fault.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/internal/Fault.xsd
+END
+Envelope.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/internal/Envelope.xsd
+END
+ValidProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/internal/ValidProvider.java
+END
+RequestHeader.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/repos/!svn/ver/14471/trunk/lucifer/dsa4_ver_source/4.4.2.7/dsautil/src/ischool/dsa/internal/RequestHeader.xsd
+END
